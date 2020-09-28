@@ -44,8 +44,36 @@ public class N102BinaryTreeLevelOrderTraversal {
         return res;
     }
 
-    public static void main(String [] args)
-    {
+    public List<List<Integer>> levelOrderDFS(TreeNode root) {
+
+        List<List<Integer>> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+
+        generate(res, root, 0);
+        return res;
+    }
+
+    private void generate(List<List<Integer>> res, TreeNode root, int level) {
+        if (null == root) {
+            return;
+        }
+        if (res.size() < level + 1) {
+            res.add(new ArrayList<>());
+        }
+
+        res.get(level).add(root.val);
+
+        if (null != root.left) {
+            generate(res, root.left, level + 1);
+        }
+        if (null != root.right) {
+            generate(res, root.right, level + 1);
+        }
+    }
+
+    public static void main(String[] args) {
         TreeNode ff7 = new TreeNode(7);
         TreeNode ff8 = new TreeNode(8);
         TreeNode ff9 = new TreeNode(9);
@@ -54,13 +82,15 @@ public class N102BinaryTreeLevelOrderTraversal {
         TreeNode ff12 = new TreeNode(12);
         TreeNode ff13 = new TreeNode(13);
 
-        ff10.left=ff8;
-        ff10.right=ff12;
-        ff8.left=ff7;
-        ff8.right=ff9;
-        ff12.left=ff11;
-        ff12.right=ff13;
-        List<List<Integer>> res = new N102BinaryTreeLevelOrderTraversal().levelOrder(ff10);
+        ff10.left = ff8;
+        ff10.right = ff12;
+        ff8.left = ff7;
+        ff8.right = ff9;
+        ff12.left = ff11;
+        ff12.right = ff13;
+        List<List<Integer>> res = new N102BinaryTreeLevelOrderTraversal().levelOrderDFS(ff10);
+        List<List<Integer>> resbfs = new N102BinaryTreeLevelOrderTraversal().levelOrder(ff10);
         System.out.println(res);
+        System.out.println(resbfs);
     }
 }
